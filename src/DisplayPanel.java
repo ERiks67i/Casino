@@ -11,39 +11,27 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class DisplayPanel extends JPanel implements MouseListener, KeyListener
-{
+public abstract class DisplayPanel extends JPanel implements MouseListener, KeyListener {
     private int score;
     private boolean yellowColor;
     private int PeteX;
     private int PeteY;
     private BufferedImage background;
     private BufferedImage Pete;
-    private boolean[] pressedKeys;
 
-
-
-
-    public DisplayPanel()
-    {
+    public DisplayPanel() {
         score = 0;
         yellowColor = true;
-        PeteX = 663;
-        PeteY = 655;
-        try
-        {
+        PeteX = 50;
+        PeteY = 50;
+        try {
             background = ImageIO.read(new File("src/background.png"));
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        try
-        {
+        try {
             Pete = ImageIO.read(new File("src/peteBack.png"));
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
         addMouseListener(this);
@@ -52,159 +40,87 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         requestFocusInWindow(); // see comment above
     }
 
-    public boolean popUp()
-    {
-        while (960 < PeteX && PeteX < 1120 && 210 < PeteY && PeteY < 250)
-        {
-            return true;
-        }
-        return false; 
-    }
-
-
     @Override
-    public void paintComponent(Graphics g)
-    {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         g.drawImage(background, 0, 0, null);
         g.drawImage(Pete, PeteX, PeteY, null);
 
         // set font and color of text
         g.setFont(new Font("Arial", Font.BOLD, 16));
-        if (yellowColor)
-        {
+        if (yellowColor) {
             g.setColor(Color.YELLOW);
-        } else
-        {
+        } else {
             g.setColor(Color.BLACK);
         }
         g.drawString("Score: " + score, 50, 30);
     }
 
-    public void  choose()
-    {
-        while (popUp() == true)
-        {
-            try
-            {
-                background = ImageIO.read(new File("src/roulette.png"));
-            }
-            catch (IOException e)
-            {
-                System.out.println(e.getMessage());
-            }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    } // unimplemented
+    // unimplemented because if you move your mouse while clicking, this method isn't
+    // called, so mouseReleased is best
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    } // unimplemented
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            yellowColor = !yellowColor;
             repaint();
         }
     }
-        @Override
-        public void keyPressed(KeyEvent e)
-        {
-            popUp();
-            int keyCode = e.getKeyCode();
-            if (keyCode == KeyEvent.VK_A) {  // A key; VK_A equals 65
-            PeteX -= 7;
-            try
-            {
-                Pete = ImageIO.read(new File("src/peteLeft.png"));
-            }
-            catch (IOException error)
-            {
 
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    } // unimplemented
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    } // unimplemented
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    } // unimplemented
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_A) {  // A key; VK_A equals 65
+            PeteX -= 5;
+            try {
+                Pete = ImageIO.read(new File("src/marioleft.png"));
+            } catch (IOException error) {
             }
             repaint();
-
         }
-
         if (keyCode == KeyEvent.VK_D) {  // D key; VK_D equals 65
-            PeteX += 7;
-            try
-            {
-                Pete = ImageIO.read(new File("src/peteRight.png"));
-            }
-            catch (IOException error)
-            {
-
+            PeteX += 5;
+            try {
+                Pete = ImageIO.read(new File("src/marioright.png"));
+            } catch (IOException error) {
             }
             repaint();
-            popUp();
         }
-
-        if (keyCode == KeyEvent.VK_S)
-        {  // A key; VK_A equals 65
-            PeteY += 7;
-            try
-            {
+        if (keyCode == KeyEvent.VK_S) {  // A key; VK_A equals 65
+            PeteY += 5;
+            try {
                 Pete = ImageIO.read(new File("src/peteFront.png"));
-            }
-            catch (IOException error)
-            {
-
+            } catch (IOException error) {
             }
             repaint();
-            popUp();
         }
         if (keyCode == KeyEvent.VK_W) {  // D key; VK_D equals 65
-            PeteY -= 7;
-            try
-            {
+            PeteY -= 5;
+            try {
                 Pete = ImageIO.read(new File("src/peteBack.png"));
-            }
-            catch (IOException error)
-            {
-
+            } catch (IOException error) {
             }
             repaint();
-            popUp();
         }
-
     }
-
-
-
-    @Override
-    public void mouseClicked(MouseEvent e)
-    {
-
-    }
-
-
-
-    @Override
-    public void mousePressed(MouseEvent e)
-    {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e)
-    {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e)
-    {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e)
-    {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e)
-    {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e)
-    {
-        int key = e.getKeyCode();
-        pressedKeys[key] = false;
-    }
-
 }
