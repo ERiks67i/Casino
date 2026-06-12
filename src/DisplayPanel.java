@@ -18,20 +18,27 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
     private int PeteY;
     private BufferedImage background;
     private BufferedImage Pete;
+    private BufferedImage Play;
 
     public DisplayPanel() {
         score = 0;
         yellowColor = true;
-        PeteX = 50;
-        PeteY = 50;
-        try {
+        PeteX = 665;
+        PeteY = 650;
+        try
+        {
             background = ImageIO.read(new File("src/background.png"));
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             System.out.println(e.getMessage());
         }
-        try {
+        try
+        {
             Pete = ImageIO.read(new File("src/peteBack.png"));
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             System.out.println(e.getMessage());
         }
         addMouseListener(this);
@@ -45,7 +52,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
         g.drawImage(Pete, PeteX, PeteY, null);
-
+        g.drawImage(Play, 1035, 0, null);
         // set font and color of text
         g.setFont(new Font("Arial", Font.BOLD, 16));
         if (yellowColor) {
@@ -56,6 +63,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         g.drawString("Score: " + score, 50, 30);
     }
 
+
     @Override
     public void mouseClicked(MouseEvent e) {
     } // unimplemented
@@ -65,6 +73,21 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
     @Override
     public void mousePressed(MouseEvent e) {
     } // unimplemented
+
+    public void popUp() {
+        if (960 < PeteX && PeteX < 1120 && 210 < PeteY && PeteY < 250)
+        {
+            try
+            {
+                Play = ImageIO.read(new File("src/Play.png"));
+            }
+            catch (IOException e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -93,18 +116,20 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         if (keyCode == KeyEvent.VK_A) {  // A key; VK_A equals 65
             PeteX -= 5;
             try {
-                Pete = ImageIO.read(new File("src/marioleft.png"));
+                Pete = ImageIO.read(new File("src/peteLeft.png"));
             } catch (IOException error) {
             }
             repaint();
+            popUp();
         }
         if (keyCode == KeyEvent.VK_D) {  // D key; VK_D equals 65
             PeteX += 5;
             try {
-                Pete = ImageIO.read(new File("src/marioright.png"));
+                Pete = ImageIO.read(new File("src/peteRight.png"));
             } catch (IOException error) {
             }
             repaint();
+            popUp();
         }
         if (keyCode == KeyEvent.VK_S) {  // A key; VK_A equals 65
             PeteY += 5;
@@ -113,6 +138,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
             } catch (IOException error) {
             }
             repaint();
+            popUp();
         }
         if (keyCode == KeyEvent.VK_W) {  // D key; VK_D equals 65
             PeteY -= 5;
@@ -121,6 +147,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
             } catch (IOException error) {
             }
             repaint();
+            popUp();
         }
     }
 }
