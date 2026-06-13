@@ -21,7 +21,9 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
     private BufferedImage Pete;
     private boolean[] pressedKeys;
 
-
+    public void popUp() {
+        while (960 < PeteX && PeteX < 1120 && 210 < PeteY && PeteY < 250) System.out.println("It Popped!");
+    }
 
 
     public DisplayPanel()
@@ -52,21 +54,10 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         requestFocusInWindow(); // see comment above
     }
 
-    public boolean popUp()
-    {
-        while (960 < PeteX && PeteX < 1120 && 210 < PeteY && PeteY < 250)
-        {
-            return true;
-        }
-        return false; 
-    }
-
-
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-
         g.drawImage(background, 0, 0, null);
         g.drawImage(Pete, PeteX, PeteY, null);
 
@@ -81,26 +72,10 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         }
         g.drawString("Score: " + score, 50, 30);
     }
-
-    public void  choose()
-    {
-        while (popUp() == true)
-        {
-            try
-            {
-                background = ImageIO.read(new File("src/roulette.png"));
-            }
-            catch (IOException e)
-            {
-                System.out.println(e.getMessage());
-            }
-            repaint();
-        }
-    }
         @Override
         public void keyPressed(KeyEvent e)
         {
-            popUp();
+
             int keyCode = e.getKeyCode();
             if (keyCode == KeyEvent.VK_A) {  // A key; VK_A equals 65
             PeteX -= 7;
@@ -113,7 +88,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
 
             }
             repaint();
-
+                popUp();
         }
 
         if (keyCode == KeyEvent.VK_D) {  // D key; VK_D equals 65
