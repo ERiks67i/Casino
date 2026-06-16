@@ -12,9 +12,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+
 public abstract class DisplayPanel extends JPanel implements MouseListener, KeyListener
 {
-    public String color;
+
+
+    public String color = "";
     public int x;
     public int y;
     private int score;
@@ -26,12 +29,16 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
     private BufferedImage Play;
     private BufferedImage Roulette;
     private BufferedImage Start;
+    public String[] Numbers = {"", "green", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "black", "red", "black", "red", "black", "red", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "black", "red", "black", "red", "black", "red", "black", "red", "red"};
+
+
 
     public DisplayPanel() {
-        score = 0;
+        score = 5;
         yellowColor = true;
         PeteX = 665;
         PeteY = 650;
+
 
         try
         {
@@ -55,6 +62,17 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         requestFocusInWindow(); // see comment above
     }
 
+    public void Roulette()
+    {
+        int randomNumber = (int) (Math.random() * 37);
+        System.out.println(randomNumber);
+        if (Numbers[randomNumber].equals("red") && color.equals("bet on red") || Numbers[randomNumber].equals("black") && color.equals("bet on black")) {
+            score = score * 2;
+            repaint();
+        }
+    }
+
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -74,15 +92,19 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
     }
 
 
+
+
     @Override
     public void mouseClicked(MouseEvent e) {
     } // unimplemented
     // unimplemented because if you move your mouse while clicking, this method isn't
     // called, so mouseReleased is best
 
+
     @Override
     public void mousePressed(MouseEvent e) {
     } // unimplemented
+
 
     public void playRoulette()
     {
@@ -93,12 +115,15 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
             background = ImageIO.read(InputStream.nullInputStream());
             Play = ImageIO.read(InputStream.nullInputStream());
             Start = ImageIO.read(new File("src/start.png"));
+
         }
         catch (IOException error)
         {
 
+
         }
         repaint();
+
 
     }
     public void popUp() {
@@ -128,9 +153,11 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         }
     }
 
+
     @Override
     public void mouseReleased(MouseEvent e)
     {
+
 
         if (e.getButton() == MouseEvent.BUTTON1)
         {
@@ -140,40 +167,47 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         }
         if (873 < x && x < 985 && 425 > y && y > 380 )
         {
-             color = "bet on red";
+            color = "bet on red";
             System.out.println(color);
         }
-
         if (985 < x && x < 1093 && 425 > y && y > 380 )
         {
-             color = "bet on black";
+            color = "bet on black";
             System.out.println(color);
         }
         if (e.getButton() == MouseEvent.BUTTON1 && (162 < x && x < 332 && 633 > y && y > 535) && (color.equals("bet on black") || color.equals("bet on red")))
         {
-            System.out.println("didhe");
+            Roulette();
+            System.out.println("working");
         }
 
 
     }
 
+
     @Override
     public void mouseEntered(MouseEvent e)
     {
 
+
     } // unimplemented
+
 
     @Override
     public void mouseExited(MouseEvent e)
     {
 
+
     } // unimplemented
+
 
     @Override
     public void keyTyped(KeyEvent e)
     {
 
+
     } // unimplemented
+
 
     @Override
     public void keyPressed(KeyEvent e)
@@ -188,6 +222,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
             }
             catch (IOException error)
             {
+
 
             }
             repaint();
@@ -204,6 +239,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
             catch (IOException error)
             {
 
+
             }
             repaint();
             popUp();
@@ -219,6 +255,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
             catch (IOException error)
             {
 
+
             }
             repaint();
             popUp();
@@ -233,6 +270,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
             catch (IOException error)
             {
 
+
             }
             repaint();
             popUp();
@@ -243,6 +281,8 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
             playRoulette();
         }
 
+
     }
+
 
 }
