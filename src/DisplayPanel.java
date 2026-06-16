@@ -14,6 +14,7 @@ import java.io.InputStream;
 
 public abstract class DisplayPanel extends JPanel implements MouseListener, KeyListener
 {
+    public String color;
     public int x;
     public int y;
     private int score;
@@ -24,6 +25,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
     private BufferedImage Pete;
     private BufferedImage Play;
     private BufferedImage Roulette;
+    private BufferedImage Start;
 
     public DisplayPanel() {
         score = 0;
@@ -60,6 +62,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         g.drawImage(background, 0, 0, null);
         g.drawImage(Pete, PeteX, PeteY, null);
         g.drawImage(Play, 150, 300, null);
+        g.drawImage(Start, 150, 500, null);
         // set font and color of text
         g.setFont(new Font("Arial", Font.BOLD, 16));
         if (yellowColor) {
@@ -89,6 +92,7 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
             Pete = ImageIO.read(InputStream.nullInputStream());
             background = ImageIO.read(InputStream.nullInputStream());
             Play = ImageIO.read(InputStream.nullInputStream());
+            Start = ImageIO.read(new File("src/start.png"));
         }
         catch (IOException error)
         {
@@ -136,14 +140,21 @@ public abstract class DisplayPanel extends JPanel implements MouseListener, KeyL
         }
         if (873 < x && x < 985 && 425 > y && y > 380 )
         {
-            String color = "bet on red";
+             color = "bet on red";
             System.out.println(color);
         }
+
         if (985 < x && x < 1093 && 425 > y && y > 380 )
         {
-            String color = "bet on black";
+             color = "bet on black";
             System.out.println(color);
         }
+        if (e.getButton() == MouseEvent.BUTTON1 && (162 < x && x < 332 && 633 > y && y > 535) && (color.equals("bet on black") || color.equals("bet on red")))
+        {
+            System.out.println("didhe");
+        }
+
+
     }
 
     @Override
